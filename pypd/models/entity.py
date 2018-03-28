@@ -575,11 +575,10 @@ class Entity(ClientMixin):
             original_field = field
             try:
                 value = self
-                while depth:
-                    field = depth.pop(0)
+                for field in depth:
                     value = value[field]
-            except:
-                pass
+            except AttributeError:
+                value = None  # otherwise it might remain self and lead to infinite loop of __str__
 
             info[original_field] = value
 
